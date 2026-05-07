@@ -170,3 +170,10 @@ overrides:
   lodash: "^4.18.1"
   uuid: "^14.0.0"
   "@tootallnate/once": "^3.0.1"
+
+allowBuilds:
+  '@clerk/shared': true
+  '@firebase/util': true
+  core-js: true
+  esbuild: true
+  protobufjs: true
