@@ -1,0 +1,185 @@
+My MyCarQR app MVP is already built and working.
+
+VERY IMPORTANT:
+- DO NOT change existing features.
+- DO NOT delete existing code.
+- DO NOT break current QR generation, scan page, dashboard, admin panel, login, signup, payment, or vehicle system.
+- ONLY ADD the new features below.
+
+━━━━━━━━━━━━━━━━━━━━
+ADDITION 1 — PREMIUM PDF STICKER DOWNLOAD
+━━━━━━━━━━━━━━━━━━━━
+
+Upgrade the current QR download feature.
+
+User should be able to choose from 4 sticker design styles:
+
+1. Midnight Carbon
+- Dark background
+- Gold border
+- Gold MyCarQR text
+
+2. Electric Blue
+- Circular design
+- Blue theme
+- Blue QR modules
+
+3. Green Signal
+- Black background
+- Green header bar
+- MyCarQR logo/text
+- Clean rectangular layout
+
+4. Racing Red
+- Horizontal layout
+- Red left stripe
+- QR on right side
+
+Downloaded PDF requirements:
+- Sticker size: 8cm x 8cm
+- Print quality: 300 DPI
+- QR code must use Error Correction Level H
+- MyCarQR logo/text clearly visible
+- Vehicle number printed below QR
+- Text: “Scan to Contact Owner”
+- Hindi text: “मालिक से संपर्क करें”
+- Cut marks at all 4 corners
+- Bottom print instruction:
+  “Print on glossy vinyl and laminate”
+
+QR must remain fully scannable after styling.
+
+━━━━━━━━━━━━━━━━━━━━
+ADDITION 2 — PHYSICAL STICKER ORDER SYSTEM
+━━━━━━━━━━━━━━━━━━━━
+
+Add an “Order Physical Sticker” button in user dashboard.
+
+Order page must include 3 product options:
+- Basic Vinyl Sticker: ₹99
+- Premium Weatherproof: ₹149
+- Pack of 3 Stickers: ₹249
+
+Shipping form fields:
+- Full name
+- Phone number
+- Address line 1
+- Address line 2
+- City
+- State
+- Pincode
+
+PAYMENT — UPI ONLY:
+- Use UPI payment system with QR Code + UPI ID.
+- Show:
+  - UPI QR Code
+  - UPI ID with copy button
+- User can pay using GPay / PhonePe / Paytm or any UPI app.
+
+After payment:
+- User clicks “I Have Paid” button.
+- User must upload payment screenshot.
+- Payment screenshot is required.
+
+PAYMENT VERIFICATION FLOW:
+- Store order with payment_status = “Pending Verification”.
+- Admin verifies manually from dashboard:
+  - If valid → mark as Paid
+  - If not valid → mark as Rejected
+
+DATABASE SAVE AFTER ORDER:
+Save order in database with:
+- customer name
+- phone
+- address
+- product ordered
+- vehicle QR code
+- order date
+- payment_status: Pending / Paid / Rejected
+- order_status: Pending
+
+AFTER PAYMENT SUCCESS:
+- Customer sees confirmation screen:
+  “Your order is under verification”
+- Customer gets email confirmation.
+- Admin gets email with:
+  - customer details
+  - QR code PDF attached
+
+CUSTOMER ORDER STATUS PAGE:
+Show:
+- Payment Status:
+  Pending / Paid / Rejected
+- Order Status:
+  Pending / Printed / Shipped / Delivered
+- Tracking number visible when added by admin.
+
+After finishing ADDITION 2:
+- Test order flow
+- Test screenshot upload
+- Test database saving
+- Test admin verification
+- Test email confirmation
+- Then stop before starting Addition 3.
+
+━━━━━━━━━━━━━━━━━━━━
+ADDITION 3 — UPGRADE QR ERROR CORRECTION
+━━━━━━━━━━━━━━━━━━━━
+
+Find the current QR generation code.
+
+Upgrade QR code to:
+- Error Correction Level H
+- Add MyCarQR car logo overlay in center
+- Keep QR scannable even if slightly scratched or dirty
+
+Test:
+- QR scan after logo overlay
+- QR scan after PDF
+- QR scan on mobile
+
+━━━━━━━━━━━━━━━━━━━━
+ADDITION 4 — ADMIN ORDER DASHBOARD
+━━━━━━━━━━━━━━━━━━━━
+
+Add new admin page:
+“Sticker Orders”
+
+Admin sees:
+- All pending orders on top
+
+Each order card must show:
+- Customer name
+- Phone
+- Address
+- Product
+- Order date
+- Download QR PDF button
+- Payment screenshot preview
+- Payment status dropdown
+- Order status dropdown
+- Tracking number field
+
+SUMMARY CARDS:
+- Total orders today
+- Total revenue today
+- Pending orders
+
+Admin actions:
+- Verify payment
+- Update order status
+- Add tracking number
+- Download QR PDF
+
+━━━━━━━━━━━━━━━━━━━━
+IMPORTANT TECH RULES
+━━━━━━━━━━━━━━━━━━━━
+
+- Do NOT touch existing features.
+- Do NOT break current system.
+- Prefer new tables instead of modifying old tables.
+- Keep UI same, only add required buttons/pages/features.
+- All new pages must be mobile-friendly.
+- Store all sensitive data in environment variables.
+- Keep app fast, premium, clean, and production-ready.
+- Do proper testing after each addition.

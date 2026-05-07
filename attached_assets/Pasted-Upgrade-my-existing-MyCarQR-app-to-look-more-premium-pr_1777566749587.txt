@@ -1,0 +1,175 @@
+Upgrade my existing MyCarQR app to look more premium, professional, trustworthy, and revenue-ready.
+
+VERY IMPORTANT:
+- My MyCarQR MVP is already working.
+- DO NOT remove any existing feature.
+- DO NOT delete existing code.
+- DO NOT change landing page.
+- DO NOT change pricing section.
+- DO NOT change premium lock system.
+- DO NOT break QR generation, vehicle system, scan page, admin panel, subscriptions, UPI payment, Razorpay sticker order, PDF sticker download, login/signup/logout, or dashboard.
+- ONLY ADD the new legal pages, profile/settings features, admin controls, and UI polish mentioned below.
+
+━━━━━━━━━━━━━━━━━━━━
+PART 1 — LEGAL & TRUST PAGES
+━━━━━━━━━━━━━━━━━━━━
+
+Add these pages and link them in footer + profile/settings section:
+
+1. About Us
+2. Contact Us with support form
+3. Privacy Policy
+4. Terms & Conditions
+5. Refund & Cancellation Policy
+6. Shipping Policy
+7. Disclaimer
+
+Contact form should:
+- Collect name, email, phone, message
+- Save message in database
+- Show success message
+- Be visible to admin
+
+━━━━━━━━━━━━━━━━━━━━
+PART 2 — PROFILE / SETTINGS UPGRADE
+━━━━━━━━━━━━━━━━━━━━
+
+Upgrade user profile/settings section with these cards/tabs:
+
+1. Account Management
+- Edit name
+- Edit phone number
+- Edit email if supported
+- Change password if password login exists
+- Logout
+- Delete account with confirmation popup
+
+2. Vehicle Management
+- View all vehicles
+- Add/Edit/Delete vehicle
+- Download QR again
+- View scan history per vehicle
+
+3. Subscription & Billing
+- Current plan: Free / Monthly / Yearly
+- Plan expiry date
+- Upgrade plan button
+- Payment history
+- Pending payment status
+- Rejected payment reason if any
+
+4. Sticker Orders
+- Show all physical sticker orders
+- Product name
+- Order date
+- Payment status
+- Order status: Pending / Printed / Shipped / Delivered
+- Tracking number if available
+- Reorder button
+
+5. Notification Settings
+User can enable/disable:
+- Scan alerts
+- SMS alerts
+- Email alerts
+- Emergency alerts
+- Order updates
+
+6. Emergency Profile
+- Emergency contact name
+- Emergency phone
+- Blood group
+- Medical notes
+- Toggle: show/hide emergency info on QR scan page
+
+7. Help & Support
+- Contact support button
+- FAQ link
+- Report a problem form
+
+8. App Settings
+- Theme toggle: light/dark if easy to add
+- Language placeholder for future
+- Notification preferences
+
+━━━━━━━━━━━━━━━━━━━━
+PART 3 — ADMIN PANEL ADDITIONS
+━━━━━━━━━━━━━━━━━━━━
+
+Add admin controls for the new pages/features:
+
+1. Contact Messages
+- View all contact form submissions
+- Mark as resolved
+- Delete message
+
+2. Legal Page Editor
+Admin can edit:
+- About Us
+- Privacy Policy
+- Terms & Conditions
+- Refund Policy
+- Shipping Policy
+- Disclaimer
+
+3. FAQ Manager
+- Add FAQ
+- Edit FAQ
+- Delete FAQ
+
+4. Testimonials Manager
+- Add testimonial
+- Edit testimonial
+- Delete testimonial
+
+5. Support Tickets
+- View user problem reports
+- Mark as resolved
+- Delete ticket
+
+━━━━━━━━━━━━━━━━━━━━
+PART 4 — PREMIUM UI POLISH ONLY
+━━━━━━━━━━━━━━━━━━━━
+
+Apply polish only to new pages/sections added above:
+- Clean card-based layout
+- Smooth loading states
+- Success/error messages
+- Empty states with helpful text
+- Confirmation popups for delete actions
+- Icons for profile/settings/legal/support
+- Mobile-friendly spacing
+- Consistent buttons
+- No broken links
+- No dead buttons
+
+Do NOT redesign existing beautiful landing page or existing premium lock system.
+
+━━━━━━━━━━━━━━━━━━━━
+PART 5 — FINAL TEST
+━━━━━━━━━━━━━━━━━━━━
+
+After implementation, test:
+- Existing login/signup/logout
+- Existing QR generation
+- Existing QR scan page
+- Existing vehicle system
+- Existing admin panel
+- Existing subscription system
+- Existing UPI payment
+- Existing Razorpay sticker order system
+- Existing PDF sticker download
+- New legal pages
+- New profile/settings sections
+- New contact form
+- New admin sections
+- Mobile responsiveness
+
+If anything breaks, fix it.
+
+Final response should tell me:
+1. What was added
+2. What routes/pages were created
+3. What database tables/fields were added
+4. What environment variables are needed, if any
+5. Whether everything is fully functional

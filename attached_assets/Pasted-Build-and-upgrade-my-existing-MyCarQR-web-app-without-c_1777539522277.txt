@@ -1,0 +1,82 @@
+Build and upgrade my existing MyCarQR web app without changing or removing any current MVP features, design, flows, or working functionality. Keep everything that already works exactly as it is. Only ADD the following new features in a clean, premium, mobile-friendly, user-friendly way.
+
+New Features to Add
+
+1. Accident Witness Mode
+
+When someone scans a vehicle QR code, show an option called Report Accident / Witness Incident.
+This should allow the scanner to:
+
+* Submit accident details
+* Write what happened
+* Upload photos
+* Auto capture date & time
+* Auto capture location (if permission given)
+* Send report instantly to owner dashboard
+
+Owner should receive:
+
+* Instant notification
+* Full report in dashboard
+* Photos
+* Time & location
+
+2. SOS Emergency Profile
+
+Inside user dashboard, add a section called Emergency Profile where owner can save:
+
+* Emergency contact name
+* Emergency phone number
+* Blood group
+* Important medical notes
+* Optional alternate contact
+
+When scanner opens QR page, show a clear Emergency Help button that reveals this info only if user enabled it.
+
+3. Lost Key Return Mode
+
+On QR scan page add a feature called Found Keys / Lost Item?
+Scanner can:
+
+* Send message to owner
+* Upload photo of found key/item
+* Share location
+* Contact owner instantly
+
+Owner receives alert in dashboard.
+
+4. Smart Multi-Vehicle Family Account
+
+Allow one account to manage multiple vehicles:
+
+* Car
+* Bike
+* Scooter
+* Family vehicles
+
+Add:
+
+* “Add New Vehicle” button
+* Separate QR code for each vehicle
+* Edit/Delete vehicle
+* Switch between vehicles in dashboard
+* View scan history per vehicle
+
+Important Instructions
+
+* Do NOT remove any existing features
+* Do NOT break current QR generation system
+* Do NOT change current UI unless improving visually
+* Keep landing page same, only enhance if needed
+* Keep login/signup working
+* Keep current dashboard and add new sections smartly
+* Keep mobile responsive
+* Keep app fast and lightweight
+* Use clean modern premium design
+* All buttons fully functional
+* Store data properly in backend/database
+* Ensure QR scan experience is smooth and quick
+
+Final Goal
+
+Make MyCarQR feel like a real startup product worth ₹100 crore while preserving the current MVP exactly as it is.

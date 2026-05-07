@@ -1,0 +1,260 @@
+Act as a 10+ years experienced full-stack app developer, UI/UX designer, product strategist, and startup founder.
+
+Build a premium, addictive, eye-catching, user-friendly web app called:
+
+MyCarQR
+
+TAGLINE:
+“Scan to Reach the Car Owner”
+
+CORE IDEA:
+MyCarQR helps car owners create a smart QR code for their vehicle. Anyone can scan the QR code to contact the owner during parking issues, emergencies, blocked vehicles, lights left on, scratches, wrong parking, or urgent situations — without exposing unnecessary personal details.
+
+IMPORTANT:
+Build a complete working MVP, not just UI.
+Make it mobile-first, premium, smooth, and production-ready.
+
+TECH STACK:
+- React
+- Tailwind CSS
+- Node.js / Express if backend needed
+- Supabase or Firebase for auth/database
+- QR code generation
+- Responsive web app
+
+MAIN USER FLOW:
+
+1. Landing Page
+Create a beautiful modern landing page.
+
+Sections:
+- Hero section
+- How it works
+- Problem it solves
+- Features
+- Pricing
+- FAQ
+- Safety/privacy section
+- CTA buttons
+
+Hero headline:
+“Your Car’s Smart QR Identity”
+
+Subheadline:
+“Let anyone reach you instantly when your car is blocking, lights are on, or there is an emergency — without revealing your number publicly.”
+
+CTA:
+- Create My Car QR
+- See How It Works
+
+2. Authentication
+Add:
+- Sign up
+- Login
+- Forgot password
+- Logout
+
+3. User Dashboard
+After login show:
+- Welcome message
+- Add Vehicle button
+- My Vehicles
+- QR downloads
+- Recent scan alerts
+- Subscription status
+
+4. Add Vehicle
+User can add:
+- Owner name
+- Vehicle type: Car / Bike / Scooter / Commercial
+- Vehicle number
+- Brand
+- Model
+- Color
+- Primary contact
+- WhatsApp number
+- Emergency contact
+- Preferred contact method
+- Privacy mode on/off
+
+5. QR Code Generator
+For each vehicle:
+- Generate unique QR code
+- Show preview
+- Download QR
+- Print sticker design
+- Share QR link
+
+QR should open public vehicle contact page.
+
+6. Public Scan Page
+When someone scans QR, show:
+
+Title:
+“Need to contact this vehicle owner?”
+
+Vehicle info:
+- Vehicle number
+- Vehicle type
+- Brand/model if owner allows
+- Privacy-safe owner name if allowed
+
+Quick alert buttons:
+- Please move your vehicle
+- Your lights are on
+- Vehicle is blocking the way
+- Window is open
+- Emergency
+- Minor damage noticed
+- Wrong parking
+
+Contact options:
+- Call owner
+- WhatsApp owner
+- Send alert message
+
+If privacy mode is on:
+Do not directly show phone number.
+Show contact buttons only.
+
+7. Scan Alert System
+When scanner sends alert:
+- Save alert in database
+- Show in owner dashboard
+- Include alert type, message, time, vehicle
+- Mark as read/unread
+
+8. Addictive Engagement Features
+Add features that make users open daily:
+
+- Vehicle safety score
+- Daily vehicle check reminder
+- Scan history
+- Emergency readiness score
+- Sticker status: Active / Not printed
+- “Protect your car” checklist
+- Reminder to update insurance / pollution / service date
+- Streak for weekly vehicle check
+
+9. Vehicle Document Reminder
+User can add dates for:
+- Insurance expiry
+- Pollution certificate expiry
+- Registration renewal
+- Service due date
+
+Show reminders:
+- Expiring soon
+- Expired
+- Up to date
+
+10. Pricing System
+Add Free and Premium plans.
+
+Free Plan:
+- 1 vehicle
+- Basic QR
+- Basic contact page
+- 5 scan alerts/month
+
+Premium Plan:
+₹49/month
+₹299/year
+
+Premium includes:
+- Multiple vehicles
+- Unlimited alerts
+- Privacy mode
+- Emergency contact
+- Document reminders
+- Premium QR sticker designs
+- Scan history
+- Safety score
+
+11. Premium Locks
+Free users should clearly see what is locked.
+If they click premium feature, show upgrade popup.
+
+12. Admin Panel
+Create secure admin panel.
+
+Admin can:
+- view users
+- view vehicles
+- view scan alerts
+- manage subscriptions
+- create premium sticker designs
+- see analytics
+- manage reported abuse
+
+13. UI/UX Design
+Make design:
+- Premium
+- Clean
+- Mobile-first
+- Trustworthy
+- Modern
+- Pleasant to look at
+- Smooth animations
+- Rounded cards
+- Professional icons
+- Dark/light mode if possible
+
+Color theme:
+- Deep blue
+- White
+- Electric cyan
+- Soft green for safety
+
+14. Safety & Privacy
+Add clear messaging:
+- No unnecessary public phone display
+- Owner controls privacy
+- QR can be disabled anytime
+- Abuse reporting option
+- Emergency contact optional
+
+15. No Fake Data
+Do not show fake users, fake scans, fake alerts, or fake vehicle records.
+Use empty states if no data.
+
+16. Empty States
+If user has no vehicle:
+Show:
+“Add your first vehicle to generate your smart QR.”
+
+If no alerts:
+Show:
+“No scan alerts yet. Your alerts will appear here.”
+
+17. Mobile Optimization
+Most users will use mobile.
+Make everything perfect on mobile:
+- big buttons
+- easy forms
+- fast loading
+- no overflow
+- clean QR display
+
+18. Final Required Pages
+- Landing page
+- Login
+- Signup
+- Dashboard
+- Add vehicle
+- Vehicle details
+- QR generator
+- Public scan page
+- Alerts page
+- Document reminders
+- Pricing
+- Profile/settings
+- Admin panel
+- Privacy policy
+- Terms
+- Contact
+
+19. Final Goal
+MyCarQR should feel like a serious startup app that solves a real parking/contact problem and can be sold to car owners, apartments, offices, malls, and parking areas.
+
+Build the complete MVP with clean code, working routes, working forms, working QR generation, real data storage, and no broken buttons.

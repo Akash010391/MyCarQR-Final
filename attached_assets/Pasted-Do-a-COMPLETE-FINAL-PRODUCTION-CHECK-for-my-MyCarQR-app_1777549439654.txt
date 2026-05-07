@@ -1,0 +1,121 @@
+Do a COMPLETE FINAL PRODUCTION CHECK for my MyCarQR app.
+
+VERY IMPORTANT:
+- DO NOT change any working feature unless there is a bug
+- DO NOT delete any existing code
+- ONLY fix issues, improve stability, security, and production readiness
+
+━━━━━━━━━━━━━━━━━━━━
+CHECK EVERYTHING END-TO-END
+━━━━━━━━━━━━━━━━━━━━
+
+1. AUTHENTICATION
+- Login / Signup working properly
+- No unauthorized access to dashboard or admin routes
+- Session handling secure
+- Admin access only for authorized users
+
+2. QR SYSTEM
+- QR generation working
+- QR scan opens correct data
+- QR remains scannable after PDF generation
+- Error Correction Level H applied
+
+3. PDF DOWNLOAD (STICKER)
+- All 4 designs working
+- Correct size: 8cm x 8cm
+- 300 DPI quality
+- Cut marks visible
+- Text + Hindi text visible
+- QR fully scannable
+
+4. USER DASHBOARD
+- All buttons working
+- Vehicle data loading properly
+- No broken UI
+- Mobile responsive
+
+5. ORDER SYSTEM
+- “Order Physical Sticker” button working
+- Product selection working
+- Address form validation working
+
+6. UPI PAYMENT FLOW
+- UPI QR code displays correctly
+- UPI ID copy button works
+- “I Have Paid” button works
+- Screenshot upload works
+- File stored securely
+
+7. ORDER DATABASE
+- Order saves correctly
+- payment_status default = Pending Verification
+- order_status default = Pending
+
+8. ADMIN DASHBOARD
+- “Sticker Orders” page works
+- Orders visible correctly
+- Payment screenshot preview works
+- Status update (Paid / Rejected / Shipped etc.) works
+- Tracking number update works
+- Download QR PDF works
+
+9. EMAIL SYSTEM
+- Customer email sent after order
+- Admin email sent with QR PDF attachment
+- No email failures
+
+10. SCAN SYSTEM (IF IMPLEMENTED)
+- Scan logs saved
+- Location capture works (if allowed)
+- Date/time stored correctly
+
+━━━━━━━━━━━━━━━━━━━━
+SECURITY CHECK
+━━━━━━━━━━━━━━━━━━━━
+
+- No API keys exposed in frontend
+- All secrets stored in environment variables
+- Input validation for forms
+- File upload protected (only images allowed)
+- Admin routes protected
+- No SQL injection / XSS vulnerabilities
+
+━━━━━━━━━━━━━━━━━━━━
+PERFORMANCE CHECK
+━━━━━━━━━━━━━━━━━━━━
+
+- App loads fast
+- No unnecessary API calls
+- Images optimized
+- PDF generation not slow
+- No console errors
+
+━━━━━━━━━━━━━━━━━━━━
+MOBILE TEST
+━━━━━━━━━━━━━━━━━━━━
+
+- Fully responsive UI
+- Buttons clickable
+- Forms usable on mobile
+- QR scan works from phone
+
+━━━━━━━━━━━━━━━━━━━━
+FINAL OUTPUT REQUIRED
+━━━━━━━━━━━━━━━━━━━━
+
+- List ALL bugs found (if any)
+- Fix them without breaking system
+- Confirm each module is working:
+  ✅ Auth
+  ✅ QR
+  ✅ PDF
+  ✅ Orders
+  ✅ Admin
+  ✅ Payment
+  ✅ Email
+
+- Confirm:
+  “APP IS PRODUCTION READY”
+
+DO NOT SKIP ANY STEP.

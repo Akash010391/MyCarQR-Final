@@ -1,0 +1,2243 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: MyCarQR API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: qr
+    description: QR branding settings
+  - name: vehicles
+    description: Vehicle management
+  - name: alerts
+    description: Scan alerts
+  - name: documents
+    description: Vehicle document reminders
+  - name: public
+    description: Public scan page (no auth)
+  - name: users
+    description: User profile and subscription
+  - name: admin
+    description: Admin panel operations
+  - name: billing
+    description: Google Play Billing operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /qr-settings:
+    get:
+      operationId: getQrSettings
+      tags: [qr]
+      summary: Get QR branding settings (public)
+      responses:
+        "200":
+          description: Current QR settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QrSettings"
+
+  /admin/qr-settings:
+    put:
+      operationId: updateQrSettings
+      tags: [qr, admin]
+      summary: Update QR branding settings (admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateQrSettingsBody"
+      responses:
+        "200":
+          description: Updated QR settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QrSettings"
+        "403":
+          description: Forbidden
+
+  /vehicles:
+    get:
+      operationId: getVehicles
+      tags: [vehicles]
+      summary: List user's vehicles
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+    post:
+      operationId: createVehicle
+      tags: [vehicles]
+      summary: Add a new vehicle
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVehicleBody"
+      responses:
+        "201":
+          description: Vehicle created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+
+  /vehicles/{vehicleId}:
+    get:
+      operationId: getVehicle
+      tags: [vehicles]
+      summary: Get a vehicle by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Vehicle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+    put:
+      operationId: updateVehicle
+      tags: [vehicles]
+      summary: Update a vehicle
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVehicleBody"
+      responses:
+        "200":
+          description: Updated vehicle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+    delete:
+      operationId: deleteVehicle
+      tags: [vehicles]
+      summary: Delete a vehicle
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /vehicles/{vehicleId}/toggle-qr:
+    post:
+      operationId: toggleVehicleQr
+      tags: [vehicles]
+      summary: Enable or disable QR code for a vehicle
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active:
+                  type: boolean
+              required: [active]
+      responses:
+        "200":
+          description: Updated vehicle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+
+  /alerts:
+    get:
+      operationId: getAlerts
+      tags: [alerts]
+      summary: List user's scan alerts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: query
+          schema:
+            type: integer
+        - name: unreadOnly
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ScanAlert"
+
+  /alerts/{alertId}/read:
+    post:
+      operationId: markAlertRead
+      tags: [alerts]
+      summary: Mark alert as read
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: alertId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Updated alert
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanAlert"
+
+  /alerts/mark-all-read:
+    post:
+      operationId: markAllAlertsRead
+      tags: [alerts]
+      summary: Mark all alerts as read
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updated:
+                    type: integer
+                required: [updated]
+
+  /documents:
+    get:
+      operationId: getDocuments
+      tags: [documents]
+      summary: List vehicle documents/reminders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VehicleDocument"
+    post:
+      operationId: createDocument
+      tags: [documents]
+      summary: Add a document reminder
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDocumentBody"
+      responses:
+        "201":
+          description: Created document
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleDocument"
+
+  /documents/{documentId}:
+    put:
+      operationId: updateDocument
+      tags: [documents]
+      summary: Update a document reminder
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDocumentBody"
+      responses:
+        "200":
+          description: Updated document
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleDocument"
+    delete:
+      operationId: deleteDocument
+      tags: [documents]
+      summary: Delete a document reminder
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /public/vehicle/{qrCode}:
+    get:
+      operationId: getPublicVehicle
+      tags: [public]
+      summary: Get public vehicle info by QR code (no auth)
+      parameters:
+        - name: qrCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Public vehicle info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicVehicleInfo"
+        "404":
+          description: Not found or QR disabled
+
+  /public/vehicle/{qrCode}/sos:
+    get:
+      operationId: getPublicSos
+      tags: [public]
+      summary: Get SOS emergency profile for a vehicle's owner (no auth)
+      parameters:
+        - name: qrCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: SOS profile info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicSosInfo"
+        "404":
+          description: Not found or SOS disabled
+
+  /public/vehicle/{qrCode}/accident:
+    post:
+      operationId: submitAccidentReport
+      tags: [public]
+      summary: Submit an accident witness report (no auth)
+      parameters:
+        - name: qrCode
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitAccidentBody"
+      responses:
+        "201":
+          description: Report submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccidentReport"
+
+  /public/vehicle/{qrCode}/lost-item:
+    post:
+      operationId: submitLostItem
+      tags: [public]
+      summary: Submit a lost item/key found report (no auth)
+      parameters:
+        - name: qrCode
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitLostItemBody"
+      responses:
+        "201":
+          description: Report submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LostItem"
+
+  /public/vehicle/{qrCode}/alert:
+    post:
+      operationId: sendPublicAlert
+      tags: [public]
+      summary: Send a scan alert to the vehicle owner (no auth)
+      parameters:
+        - name: qrCode
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendAlertBody"
+      responses:
+        "201":
+          description: Alert sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanAlert"
+
+  /storage/uploads/request-url:
+    post:
+      operationId: requestUploadUrl
+      tags: [public]
+      summary: Request a presigned URL for direct-to-bucket photo upload (no auth)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestUploadUrlBody"
+      responses:
+        "200":
+          description: Presigned upload URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RequestUploadUrlResponse"
+
+  /sos-profile:
+    get:
+      operationId: getSosProfile
+      tags: [users]
+      summary: Get own SOS emergency profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: SOS profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SosProfile"
+    put:
+      operationId: upsertSosProfile
+      tags: [users]
+      summary: Create or update own SOS emergency profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpsertSosProfileBody"
+      responses:
+        "200":
+          description: Saved SOS profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SosProfile"
+
+  /accident-reports:
+    get:
+      operationId: getAccidentReports
+      tags: [alerts]
+      summary: List accident reports for user's vehicles
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: query
+          schema:
+            type: integer
+        - name: unreadOnly
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of accident reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccidentReport"
+
+  /accident-reports/{reportId}/read:
+    post:
+      operationId: markAccidentReportRead
+      tags: [alerts]
+      summary: Mark accident report as read
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Updated report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccidentReport"
+
+  /lost-items:
+    get:
+      operationId: getLostItems
+      tags: [alerts]
+      summary: List lost item reports for user's vehicles
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: query
+          schema:
+            type: integer
+        - name: unreadOnly
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of lost item reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LostItem"
+
+  /lost-items/{itemId}/read:
+    post:
+      operationId: markLostItemRead
+      tags: [alerts]
+      summary: Mark lost item report as read
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Updated report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LostItem"
+
+  /verify-purchase:
+    post:
+      operationId: verifyPurchase
+      tags: [billing]
+      summary: Verify a Google Play purchase and activate premium
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyPurchaseBody"
+      responses:
+        "200":
+          description: Purchase verified and premium activated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerifyPurchaseResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Purchase verification failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /payment-settings:
+    get:
+      operationId: getPaymentSettings
+      tags: [payments]
+      summary: Get current payment settings (UPI ID, QR, prices)
+      responses:
+        "200":
+          description: Payment settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentSettings"
+
+  /payment-requests:
+    get:
+      operationId: getMyPaymentRequests
+      tags: [payments]
+      summary: Get own payment requests
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of payment requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentRequest"
+    post:
+      operationId: submitPaymentRequest
+      tags: [payments]
+      summary: Submit a new payment request with screenshot
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitPaymentBody"
+      responses:
+        "201":
+          description: Payment request submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentRequest"
+
+  /admin/payment-settings:
+    put:
+      operationId: updatePaymentSettings
+      tags: [admin]
+      summary: Admin — update payment settings
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePaymentSettingsBody"
+      responses:
+        "200":
+          description: Updated settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentSettings"
+
+  /admin/payment-requests:
+    get:
+      operationId: getAdminPaymentRequests
+      tags: [admin]
+      summary: Admin — list all payment requests
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: All payment requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentRequest"
+
+  /admin/payment-requests/{requestId}/approve:
+    post:
+      operationId: approvePaymentRequest
+      tags: [admin]
+      summary: Admin — approve payment, grant premium
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adminNote:
+                  type: string
+      responses:
+        "200":
+          description: Approved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentRequest"
+
+  /admin/payment-requests/{requestId}/reject:
+    post:
+      operationId: rejectPaymentRequest
+      tags: [admin]
+      summary: Admin — reject payment request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adminNote:
+                  type: string
+              required:
+                - adminNote
+      responses:
+        "200":
+          description: Rejected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentRequest"
+
+  /admin/vehicles:
+    get:
+      operationId: getAdminVehicles
+      tags: [admin]
+      summary: Admin — list all vehicles
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Vehicle list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AdminVehicle"
+                  total:
+                    type: integer
+                required:
+                  - vehicles
+                  - total
+
+  /admin/sos-profiles:
+    get:
+      operationId: getAdminSosProfiles
+      tags: [admin]
+      summary: Admin — list all SOS profiles
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: SOS profiles list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SosProfile"
+
+  /me:
+    get:
+      operationId: getMe
+      tags: [users]
+      summary: Get current user profile & subscription
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+    put:
+      operationId: updateMyProfile
+      tags: [users]
+      summary: Update current user profile (display name, phone)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileBody"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /me/push-token:
+    post:
+      operationId: registerPushToken
+      tags: [users]
+      summary: Register an FCM push token for the current user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterPushTokenBody"
+      responses:
+        "200":
+          description: Token registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+    delete:
+      operationId: deletePushToken
+      tags: [users]
+      summary: Remove an FCM push token for the current user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeletePushTokenBody"
+      responses:
+        "200":
+          description: Token removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+  /check-document-expiry:
+    post:
+      operationId: checkDocumentExpiry
+      tags: [documents]
+      summary: Check for expiring documents and send push notifications
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Expiry check completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpiryCheckResult"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [users]
+      summary: Get dashboard summary stats
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Admin overall stats
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+  /admin/users:
+    get:
+      operationId: getAdminUsers
+      tags: [admin]
+      summary: List all users (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Users list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUsersList"
+
+  /admin/users/{userId}/upgrade:
+    post:
+      operationId: adminUpgradeUser
+      tags: [admin]
+      summary: Upgrade user to premium (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan:
+                  type: string
+                  enum: [free, premium]
+                durationDays:
+                  type: integer
+              required: [plan]
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUser"
+
+  /admin/alerts:
+    get:
+      operationId: getAdminAlerts
+      tags: [admin]
+      summary: List all scan alerts (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Alerts list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alerts:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ScanAlert"
+                  total:
+                    type: integer
+                required: [alerts, total]
+
+  /admin/accident-reports:
+    get:
+      operationId: getAdminAccidentReports
+      tags: [admin]
+      summary: List all accident reports (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Accident reports list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reports:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AccidentReport"
+                  total:
+                    type: integer
+                required: [reports, total]
+
+  /admin/accident-reports/{reportId}/read:
+    post:
+      operationId: markAdminAccidentReportRead
+      tags: [admin]
+      summary: Mark accident report as handled (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Updated report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccidentReport"
+
+  /admin/lost-items:
+    get:
+      operationId: getAdminLostItems
+      tags: [admin]
+      summary: List all lost item reports (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Lost items list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LostItem"
+                  total:
+                    type: integer
+                required: [items, total]
+
+  /admin/lost-items/{itemId}/read:
+    post:
+      operationId: markAdminLostItemRead
+      tags: [admin]
+      summary: Mark lost item report as handled (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Updated report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LostItem"
+
+  /sticker-orders:
+    post:
+      operationId: createStickerOrder
+      tags: [stickerOrders]
+      summary: Place a physical sticker order
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStickerOrderRequest"
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StickerOrder"
+    get:
+      operationId: getMyStickerOrders
+      tags: [stickerOrders]
+      summary: Get my sticker orders
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: My orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/StickerOrder"
+                required: [orders]
+
+  /admin/sticker-orders:
+    get:
+      operationId: getAdminStickerOrders
+      tags: [admin]
+      summary: Get all sticker orders (admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paymentStatus
+          in: query
+          schema:
+            type: string
+        - name: orderStatus
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: All orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/StickerOrder"
+                  total:
+                    type: integer
+                required: [orders, total]
+
+  /admin/sticker-orders/{orderId}:
+    put:
+      operationId: updateStickerOrder
+      tags: [admin]
+      summary: Update sticker order status/tracking (admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStickerOrderRequest"
+      responses:
+        "200":
+          description: Updated order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StickerOrder"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        ownerName:
+          type: string
+        vehicleType:
+          type: string
+          enum: [car, bike, scooter, commercial]
+        vehicleNumber:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        color:
+          type: string
+        primaryContact:
+          type: string
+        whatsappNumber:
+          type: string
+        emergencyContact:
+          type: string
+        preferredContactMethod:
+          type: string
+          enum: [call, whatsapp, both]
+        privacyMode:
+          type: boolean
+        qrCode:
+          type: string
+        qrActive:
+          type: boolean
+        safetyScore:
+          type: integer
+        stickerPrinted:
+          type: boolean
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - userId
+        - ownerName
+        - vehicleType
+        - vehicleNumber
+        - brand
+        - model
+        - color
+        - primaryContact
+        - preferredContactMethod
+        - privacyMode
+        - qrCode
+        - qrActive
+        - safetyScore
+        - stickerPrinted
+        - createdAt
+        - updatedAt
+
+    CreateVehicleBody:
+      type: object
+      properties:
+        ownerName:
+          type: string
+        vehicleType:
+          type: string
+          enum: [car, bike, scooter, commercial]
+        vehicleNumber:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        color:
+          type: string
+        primaryContact:
+          type: string
+        whatsappNumber:
+          type: string
+        emergencyContact:
+          type: string
+        preferredContactMethod:
+          type: string
+          enum: [call, whatsapp, both]
+        privacyMode:
+          type: boolean
+      required:
+        - ownerName
+        - vehicleType
+        - vehicleNumber
+        - brand
+        - model
+        - color
+        - primaryContact
+        - preferredContactMethod
+        - privacyMode
+
+    ScanAlert:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleId:
+          type: integer
+        vehicleNumber:
+          type: string
+        alertType:
+          type: string
+        message:
+          type: string
+        scannerLocation:
+          type: string
+        isRead:
+          type: boolean
+        createdAt:
+          type: string
+      required:
+        - id
+        - vehicleId
+        - alertType
+        - isRead
+        - createdAt
+
+    SendAlertBody:
+      type: object
+      properties:
+        alertType:
+          type: string
+        message:
+          type: string
+        scannerLocation:
+          type: string
+      required:
+        - alertType
+
+    VehicleDocument:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleId:
+          type: integer
+        vehicleNumber:
+          type: string
+        documentType:
+          type: string
+          enum: [insurance, pollution, registration, service]
+        expiryDate:
+          type: string
+        status:
+          type: string
+          enum: [up_to_date, expiring_soon, expired]
+        notes:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - vehicleId
+        - documentType
+        - expiryDate
+        - status
+        - createdAt
+        - updatedAt
+
+    CreateDocumentBody:
+      type: object
+      properties:
+        vehicleId:
+          type: integer
+        documentType:
+          type: string
+          enum: [insurance, pollution, registration, service]
+        expiryDate:
+          type: string
+        notes:
+          type: string
+      required:
+        - vehicleId
+        - documentType
+        - expiryDate
+
+    PublicVehicleInfo:
+      type: object
+      properties:
+        vehicleNumber:
+          type: string
+        vehicleType:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        color:
+          type: string
+        ownerName:
+          type: string
+        privacyMode:
+          type: boolean
+        primaryContact:
+          type: string
+        whatsappNumber:
+          type: string
+        preferredContactMethod:
+          type: string
+        qrCode:
+          type: string
+      required:
+        - vehicleNumber
+        - vehicleType
+        - privacyMode
+        - qrCode
+
+    UpdateProfileBody:
+      type: object
+      properties:
+        displayName:
+          type: string
+        phone:
+          type: string
+
+    UserProfile:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        plan:
+          type: string
+          enum: [free, premium]
+        vehicleCount:
+          type: integer
+        alertsThisMonth:
+          type: integer
+        isAdmin:
+          type: boolean
+        premiumExpiresAt:
+          type: string
+          nullable: true
+      required:
+        - userId
+        - plan
+        - vehicleCount
+        - alertsThisMonth
+        - isAdmin
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalVehicles:
+          type: integer
+        activeQrCodes:
+          type: integer
+        totalAlertsThisMonth:
+          type: integer
+        unreadAlerts:
+          type: integer
+        documentsExpiringSoon:
+          type: integer
+        documentsExpired:
+          type: integer
+        averageSafetyScore:
+          type: integer
+        recentAlerts:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScanAlert"
+      required:
+        - totalVehicles
+        - activeQrCodes
+        - totalAlertsThisMonth
+        - unreadAlerts
+        - documentsExpiringSoon
+        - documentsExpired
+        - averageSafetyScore
+        - recentAlerts
+
+    AdminStats:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        premiumUsers:
+          type: integer
+        totalVehicles:
+          type: integer
+        totalAlerts:
+          type: integer
+        alertsToday:
+          type: integer
+        totalScans:
+          type: integer
+        activeSubscriptions:
+          type: integer
+        pendingPayments:
+          type: integer
+        accidentReports:
+          type: integer
+        lostItemReports:
+          type: integer
+      required:
+        - totalUsers
+        - premiumUsers
+        - totalVehicles
+        - totalAlerts
+        - alertsToday
+        - totalScans
+        - activeSubscriptions
+        - pendingPayments
+        - accidentReports
+        - lostItemReports
+
+    AdminUser:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        plan:
+          type: string
+          enum: [free, premium]
+        vehicleCount:
+          type: integer
+        alertCount:
+          type: integer
+        createdAt:
+          type: string
+        isAdmin:
+          type: boolean
+        premiumExpiresAt:
+          type: string
+          nullable: true
+      required:
+        - userId
+        - plan
+        - vehicleCount
+        - alertCount
+        - isAdmin
+
+    AdminUsersList:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminUser"
+        total:
+          type: integer
+      required:
+        - users
+        - total
+
+    SosProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        emergencyContactName:
+          type: string
+        emergencyPhone:
+          type: string
+        bloodGroup:
+          type: string
+        medicalNotes:
+          type: string
+        altContactName:
+          type: string
+        altContactPhone:
+          type: string
+        isEnabled:
+          type: boolean
+        updatedAt:
+          type: string
+      required:
+        - id
+        - userId
+        - emergencyContactName
+        - emergencyPhone
+        - bloodGroup
+        - medicalNotes
+        - altContactName
+        - altContactPhone
+        - isEnabled
+        - updatedAt
+
+    UpsertSosProfileBody:
+      type: object
+      properties:
+        emergencyContactName:
+          type: string
+        emergencyPhone:
+          type: string
+        bloodGroup:
+          type: string
+        medicalNotes:
+          type: string
+        altContactName:
+          type: string
+        altContactPhone:
+          type: string
+        isEnabled:
+          type: boolean
+      required:
+        - emergencyContactName
+        - emergencyPhone
+        - bloodGroup
+        - medicalNotes
+        - altContactName
+        - altContactPhone
+        - isEnabled
+
+    PublicSosInfo:
+      type: object
+      properties:
+        emergencyContactName:
+          type: string
+        emergencyPhone:
+          type: string
+        bloodGroup:
+          type: string
+        medicalNotes:
+          type: string
+        altContactName:
+          type: string
+        altContactPhone:
+          type: string
+      required:
+        - emergencyContactName
+        - emergencyPhone
+        - bloodGroup
+        - medicalNotes
+        - altContactName
+        - altContactPhone
+
+    AccidentReport:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleId:
+          type: integer
+        vehicleNumber:
+          type: string
+        description:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+        locationLabel:
+          type: string
+        reportedAt:
+          type: string
+        isRead:
+          type: boolean
+      required:
+        - id
+        - vehicleId
+        - description
+        - photos
+        - reportedAt
+        - isRead
+
+    SubmitAccidentBody:
+      type: object
+      properties:
+        description:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+        locationLabel:
+          type: string
+      required:
+        - description
+
+    LostItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleId:
+          type: integer
+        vehicleNumber:
+          type: string
+        message:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+        locationLabel:
+          type: string
+        finderContact:
+          type: string
+        reportedAt:
+          type: string
+        isRead:
+          type: boolean
+      required:
+        - id
+        - vehicleId
+        - message
+        - photos
+        - reportedAt
+        - isRead
+
+    RequestUploadUrlBody:
+      type: object
+      properties:
+        name:
+          type: string
+        size:
+          type: integer
+        contentType:
+          type: string
+      required:
+        - name
+        - size
+        - contentType
+
+    RequestUploadUrlResponse:
+      type: object
+      properties:
+        uploadURL:
+          type: string
+        objectPath:
+          type: string
+        metadata:
+          type: object
+          properties:
+            name:
+              type: string
+            size:
+              type: integer
+            contentType:
+              type: string
+          required:
+            - name
+            - size
+            - contentType
+      required:
+        - uploadURL
+        - objectPath
+        - metadata
+
+    SubmitLostItemBody:
+      type: object
+      properties:
+        message:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+        locationLabel:
+          type: string
+        finderContact:
+          type: string
+      required:
+        - message
+
+    PaymentSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+        upiId:
+          type: string
+        qrImageBase64:
+          type: string
+        monthlyPrice:
+          type: integer
+        yearlyPrice:
+          type: integer
+        instructions:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - upiId
+        - qrImageBase64
+        - monthlyPrice
+        - yearlyPrice
+        - instructions
+        - updatedAt
+
+    UpdatePaymentSettingsBody:
+      type: object
+      properties:
+        upiId:
+          type: string
+        qrImageBase64:
+          type: string
+        monthlyPrice:
+          type: integer
+        yearlyPrice:
+          type: integer
+        instructions:
+          type: string
+      required:
+        - upiId
+        - monthlyPrice
+        - yearlyPrice
+        - instructions
+
+    PaymentRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
+        planType:
+          type: string
+        amount:
+          type: integer
+        screenshotBase64:
+          type: string
+        adminNote:
+          type: string
+        createdAt:
+          type: string
+        reviewedAt:
+          type: string
+        expiresAt:
+          type: string
+      required:
+        - id
+        - userId
+        - status
+        - planType
+        - amount
+        - createdAt
+
+    SubmitPaymentBody:
+      type: object
+      properties:
+        planType:
+          type: string
+        amount:
+          type: integer
+        screenshotBase64:
+          type: string
+      required:
+        - planType
+        - amount
+
+    QrSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+        brandName:
+          type: string
+        tagline:
+          type: string
+        ctaText:
+          type: string
+        enabledThemes:
+          type: array
+          items:
+            type: string
+        premiumThemes:
+          type: array
+          items:
+            type: string
+        updatedAt:
+          type: string
+          nullable: true
+      required:
+        - brandName
+        - tagline
+        - ctaText
+        - enabledThemes
+        - premiumThemes
+
+    UpdateQrSettingsBody:
+      type: object
+      properties:
+        brandName:
+          type: string
+        tagline:
+          type: string
+        ctaText:
+          type: string
+        enabledThemes:
+          type: array
+          items:
+            type: string
+        premiumThemes:
+          type: array
+          items:
+            type: string
+
+    AdminVehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        email:
+          type: string
+        vehicleNumber:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        vehicleType:
+          type: string
+        qrCode:
+          type: string
+          nullable: true
+        qrActive:
+          type: boolean
+        plan:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - userId
+        - vehicleNumber
+        - qrActive
+        - createdAt
+
+    StickerOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+        orderCode:
+          type: string
+        userId:
+          type: string
+        vehicleId:
+          type: integer
+          nullable: true
+        vehicleQrCode:
+          type: string
+          nullable: true
+        vehicleNumber:
+          type: string
+          nullable: true
+        customerName:
+          type: string
+        phone:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        state:
+          type: string
+        pincode:
+          type: string
+        product:
+          type: string
+        amount:
+          type: integer
+        stickerStyle:
+          type: string
+          nullable: true
+        screenshotBase64:
+          type: string
+          nullable: true
+        paymentStatus:
+          type: string
+        orderStatus:
+          type: string
+        trackingNumber:
+          type: string
+          nullable: true
+        adminNote:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - orderCode
+        - userId
+        - customerName
+        - phone
+        - addressLine1
+        - city
+        - state
+        - pincode
+        - product
+        - amount
+        - paymentStatus
+        - orderStatus
+        - createdAt
+        - updatedAt
+
+    CreateStickerOrderRequest:
+      type: object
+      properties:
+        vehicleId:
+          type: integer
+        vehicleQrCode:
+          type: string
+        vehicleNumber:
+          type: string
+        customerName:
+          type: string
+        phone:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        pincode:
+          type: string
+        product:
+          type: string
+        amount:
+          type: integer
+        stickerStyle:
+          type: string
+        screenshotBase64:
+          type: string
+      required:
+        - customerName
+        - phone
+        - addressLine1
+        - city
+        - state
+        - pincode
+        - product
+        - amount
+
+    UpdateStickerOrderRequest:
+      type: object
+      properties:
+        paymentStatus:
+          type: string
+        orderStatus:
+          type: string
+        trackingNumber:
+          type: string
+        adminNote:
+          type: string
+
+    RegisterPushTokenBody:
+      type: object
+      properties:
+        token:
+          type: string
+        platform:
+          type: string
+          default: android
+      required:
+        - token
+
+    DeletePushTokenBody:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+        - token
+
+    SuccessResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+      required:
+        - ok
+
+    ExpiryCheckResult:
+      type: object
+      properties:
+        checked:
+          type: integer
+        notified:
+          type: integer
+      required:
+        - checked
+        - notified
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    VerifyPurchaseBody:
+      type: object
+      properties:
+        purchaseToken:
+          type: string
+        productId:
+          type: string
+      required:
+        - purchaseToken
+        - productId
+
+    VerifyPurchaseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        plan:
+          type: string
+        premiumExpiresAt:
+          type: string
+      required:
+        - success
+        - plan
+        - premiumExpiresAt

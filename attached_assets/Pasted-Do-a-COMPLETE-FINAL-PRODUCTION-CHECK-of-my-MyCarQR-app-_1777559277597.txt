@@ -1,0 +1,149 @@
+Do a COMPLETE FINAL PRODUCTION CHECK of my MyCarQR app.
+
+VERY IMPORTANT:
+- DO NOT change working features unless there is a real bug.
+- DO NOT delete existing code.
+- DO NOT break QR generation, scan page, user dashboard, admin dashboard, login, signup, payment, vehicle system, PDF download, or order system.
+- Only fix bugs, security issues, mobile issues, broken links, and production-readiness problems.
+
+━━━━━━━━━━━━━━━━━━━━
+CHECK ALL MODULES
+━━━━━━━━━━━━━━━━━━━━
+
+1. AUTH
+- Signup works
+- Login works
+- Logout works
+- Session handling works
+- Admin access works only for admin users
+- Normal users cannot access admin pages
+
+2. QR SYSTEM
+- QR generation works
+- QR opens correct vehicle scan/contact page
+- QR uses Error Correction Level H
+- QR remains scannable after logo/style overlay
+- Multiple users get different correct QR codes
+
+3. PREMIUM STICKER DOWNLOAD
+- All 4 sticker styles work:
+  - Midnight Carbon
+  - Light Premium
+  - Racing Red
+  - Electric Blue
+- Sticker PDF size is 8cm x 8cm
+- PDF is 300 DPI quality
+- Vehicle number appears
+- “Scan to Contact Owner” appears
+- “मालिक से संपर्क करें” appears
+- Cut marks appear at 4 corners
+- “Print on glossy vinyl and laminate” appears
+- QR scans correctly from downloaded PDF
+
+4. USER DASHBOARD
+- Vehicle data loads correctly
+- QR preview works
+- Download button works
+- Sticker style selector works
+- Order Physical Sticker button works
+- UI is mobile friendly
+
+5. UPI PAYMENT ORDER SYSTEM
+- Product options show correctly:
+  - Basic Vinyl Sticker ₹99
+  - Premium Weatherproof ₹149
+  - Pack of 3 Stickers ₹249
+- Shipping form validation works
+- UPI QR code displays
+- UPI ID shows correctly: aakashkaishyap2-1@oksbi
+- Copy UPI ID button works
+- “I Have Paid” button works
+- Payment screenshot upload is required
+- Order saves with payment_status = Pending Verification
+- order_status = Pending
+
+6. CUSTOMER ORDER STATUS PAGE
+- Payment status shows:
+  Pending / Paid / Rejected
+- Order status shows:
+  Pending / Printed / Shipped / Delivered
+- Tracking number appears when added by admin
+
+7. ADMIN DASHBOARD
+- Sticker Orders page works
+- Pending orders appear at top
+- Order cards show:
+  - Customer name
+  - Phone
+  - Address
+  - Product
+  - Order date
+  - Payment screenshot preview
+  - Payment status dropdown
+  - Order status dropdown
+  - Tracking number field
+  - Download QR PDF button
+- Admin can verify payment
+- Admin can reject payment
+- Admin can update order status
+- Admin can add tracking number
+- Admin can download QR PDF
+- Summary cards work:
+  - Total orders today
+  - Total revenue today
+  - Pending orders
+
+8. EMAIL SYSTEM
+- Customer email confirmation works
+- Admin email works
+- Admin email includes customer details
+- QR PDF attachment works
+- No email credentials are exposed
+
+9. SECURITY CHECK
+- No secrets/API keys/admin credentials hardcoded
+- All sensitive values use environment variables
+- Admin routes protected
+- User routes protected
+- File upload accepts only valid images
+- Payment screenshot upload is secure
+- Form validation prevents bad input
+- No console errors
+- No obvious XSS or injection issues
+
+10. MOBILE + PERFORMANCE CHECK
+- App works on mobile screen
+- Buttons are clickable
+- Forms are easy to use
+- PDF download works
+- QR scan works from mobile
+- Pages load fast
+- Images/logos are optimized
+- No broken layout
+
+━━━━━━━━━━━━━━━━━━━━
+FINAL OUTPUT REQUIRED
+━━━━━━━━━━━━━━━━━━━━
+
+After checking, give me a clear report:
+
+1. Bugs found
+2. Bugs fixed
+3. Files changed
+4. Environment variables required
+5. Final test result for:
+   - Auth
+   - QR
+   - PDF
+   - User dashboard
+   - Order system
+   - UPI payment
+   - Admin dashboard
+   - Email
+   - Mobile view
+
+Finally confirm clearly:
+
+“MYCARQR APP IS PRODUCTION READY”
+
+Do not skip any step.

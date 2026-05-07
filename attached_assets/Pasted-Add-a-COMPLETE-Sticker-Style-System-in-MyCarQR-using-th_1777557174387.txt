@@ -1,0 +1,124 @@
+Add a COMPLETE Sticker Style System in MyCarQR using the 4 uploaded logo designs.
+
+VERY IMPORTANT:
+- DO NOT change existing QR generation logic
+- DO NOT break dashboard, admin, login, signup, or payment system
+- ONLY extend current QR download feature
+- Use existing QR data (vehicle-based QR)
+
+━━━━━━━━━━━━━━━━━━━━
+GOAL
+━━━━━━━━━━━━━━━━━━━━
+
+Allow user to choose between 4 premium sticker styles:
+1. Midnight Carbon (Gold + Black)
+2. Light Premium (White + Gold)
+3. Racing Red
+4. Electric Blue
+
+━━━━━━━━━━━━━━━━━━━━
+UPLOAD ASSETS
+━━━━━━━━━━━━━━━━━━━━
+
+- I will upload 4 logo files into assets/images:
+  - midnight.png
+  - light.png
+  - red.png
+  - blue.png
+
+Detect these automatically and use them as sticker templates.
+
+━━━━━━━━━━━━━━━━━━━━
+IMPLEMENTATION
+━━━━━━━━━━━━━━━━━━━━
+
+1. ADD STYLE SELECTOR UI
+
+In QR download section:
+- Add "Choose Sticker Style"
+- Show 4 preview cards (clickable)
+- Highlight selected style
+- Save selected style temporarily
+
+━━━━━━━━━━━━━━━━━━━━
+2. DYNAMIC QR INTEGRATION
+━━━━━━━━━━━━━━━━━━━━
+
+For each style:
+- Use uploaded logo as background/template
+- Replace the QR area inside the logo with:
+  → dynamically generated user QR code
+
+Requirements:
+- QR must be real and scannable
+- Use Error Correction Level H
+- Add white background behind QR if needed
+- Maintain proper quiet zone
+
+━━━━━━━━━━━━━━━━━━━━
+3. CENTER LOGO OVERLAY
+━━━━━━━━━━━━━━━━━━━━
+
+- Keep small lock/shield icon in center (optional)
+- Max size: 12–15% of QR width
+- If scan fails → remove automatically
+
+━━━━━━━━━━━━━━━━━━━━
+4. PDF GENERATION
+━━━━━━━━━━━━━━━━━━━━
+
+Upgrade download to generate styled PDF:
+
+- Size: 8cm x 8cm
+- DPI: 300
+- Include:
+  - Selected sticker design
+  - Dynamic QR
+  - Vehicle number below QR
+  - Text: "Scan to Contact Owner"
+  - Hindi: "मालिक से संपर्क करें"
+  - Cut marks (4 corners)
+  - Bottom text:
+    "Print on glossy vinyl and laminate"
+
+━━━━━━━━━━━━━━━━━━━━
+5. APPLY EVERYWHERE
+━━━━━━━━━━━━━━━━━━━━
+
+Use selected style in:
+- User dashboard QR preview
+- Downloaded PDF
+- Admin QR download
+- Sticker order system
+
+━━━━━━━━━━━━━━━━━━━━
+6. FALLBACK SAFETY
+━━━━━━━━━━━━━━━━━━━━
+
+If template fails:
+- Use existing basic QR
+- DO NOT break system
+
+━━━━━━━━━━━━━━━━━━━━
+7. TESTING
+━━━━━━━━━━━━━━━━━━━━
+
+- Generate QR for multiple users
+- Test all 4 styles
+- Download PDF
+- Scan using mobile
+- Confirm correct page opens
+
+If any scan fails:
+- Reduce overlay
+- Increase QR margin
+- Keep Error Correction H
+
+━━━━━━━━━━━━━━━━━━━━
+FINAL OUTPUT
+━━━━━━━━━━━━━━━━━━━━
+
+- Confirm all 4 styles working
+- Confirm QR is scannable in all styles
+- Confirm PDF works
+- Confirm no existing feature is broken

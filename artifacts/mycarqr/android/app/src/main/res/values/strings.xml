@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MyCarQR</string>
+    <string name="title_activity_main">MyCarQR</string>
+    <string name="package_name">com.mycarqr.app</string>
+    <string name="custom_url_scheme">com.mycarqr.app</string>
+</resources>

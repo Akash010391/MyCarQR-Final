@@ -1,0 +1,77 @@
+Update my existing MyCarQR app without removing or breaking any current features.
+
+Add these subscription changes and make everything fully functional.
+
+1. Add pricing plans
+- Free Plan: ₹0
+- Monthly Premium Plan: ₹99
+- Yearly Premium Plan: ₹599
+
+2. Clearly differentiate Free vs Paid features
+Create a clear pricing/features section on landing page, dashboard, and payment page.
+
+Free Plan should include:
+- Basic QR code generation
+- Basic vehicle profile
+- Basic contact alert
+- Limited scan history
+
+Premium Plan should include:
+- Multiple vehicles
+- Custom QR design
+- Accident Witness Mode
+- SOS Emergency Profile
+- Lost Key / Found Item Mode
+- Full scan history
+- Priority alerts
+- Premium dashboard access
+
+3. Payment page
+Show both premium plans:
+- ₹99 monthly
+- ₹599 yearly
+
+User should choose one plan before payment.
+
+4. Manual UPI/QR payment system
+Keep UPI ID and QR code payment system.
+User should see:
+- Selected plan name
+- Selected plan price
+- Admin-set UPI ID
+- Admin-set QR code image
+- Payment instructions
+- Payment screenshot upload option
+- Submit payment request button
+
+5. Admin payment control
+Only admin can edit/change:
+- UPI ID
+- QR code image
+- Monthly price
+- Yearly price
+- Payment instructions
+- Free/Premium feature list
+
+6. Payment approval system
+After user submits payment screenshot:
+- Status should become “Pending Approval”
+- Admin can approve or reject
+- If monthly plan approved, premium access valid for 30 days
+- If yearly plan approved, premium access valid for 365 days
+- If rejected, user sees rejected status with reason
+- Premium should expire automatically after validity ends
+
+7. Access control
+Free users should not access premium features.
+When free user clicks premium feature, show popup:
+“Upgrade to Premium to unlock this feature”
+Button: “View Plans”
+Redirect to payment/pricing page.
+
+8. Important
+- Do not remove current MVP features
+- Do not break QR generation, scan page, login/signup/logout, dashboard, or existing flows
+- Make all buttons, forms, uploads, admin settings, plan selection, expiry system, and premium lock fully functional
+- Keep UI premium, clean, mobile-friendly, and fast
+- Replace old ₹49 price everywhere

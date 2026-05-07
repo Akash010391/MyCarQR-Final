@@ -1,0 +1,79 @@
+Do a FINAL PRODUCTION READINESS AUDIT for my MyCarQR app before I move from Replit to GitHub + Vercel + Neon.
+
+My MVP is already built. Do NOT add new features unless fixing bugs.
+
+Check everything like a senior production engineer:
+
+1. Core App
+- Signup/login/logout working
+- User dashboard working
+- Add/Edit/Delete vehicle working
+- Unique QR generation per vehicle working
+- QR scan page working
+- Stylish QR/PDF sticker download working
+- Mobile responsive
+
+2. Premium & Payment
+- Free vs Premium access working
+- Monthly ₹99 and Yearly ₹599 plans showing correctly
+- UPI payment page working
+- Payment screenshot upload working
+- Admin approve/reject working
+- Premium activation and expiry working
+
+3. Admin Panel
+- Admin login/access working
+- My admin account has access
+- Admin can manage users, vehicles, payments, subscriptions, reports, sticker orders, contact messages, legal pages, FAQs, and testimonials
+- No admin credentials exposed publicly
+
+4. Safety Features
+- SOS Emergency Profile working
+- Accident Witness Mode working
+- Lost Key / Found Item working
+- Scan history working
+- Location capture working if permission allowed
+
+5. Legal & Trust Pages
+- About Us
+- Contact Us
+- Privacy Policy
+- Terms & Conditions
+- Refund Policy
+- Shipping Policy
+- Disclaimer
+
+6. Production Issues
+- No console errors
+- No broken buttons
+- No dead links
+- No missing pages
+- No database save errors
+- No image upload errors
+- No environment variable missing
+- No hardcoded secret keys
+- No Replit-only dependency that will break on Vercel/Neon
+
+7. Deployment Readiness
+Tell me clearly:
+- Is this project ready to deploy outside Replit?
+- Can it run on Vercel?
+- Can it use Neon PostgreSQL?
+- What exact environment variables are needed?
+- What build command should I use?
+- What start command should I use?
+- What database migration command should I run?
+- What files must be checked before GitHub/Vercel deployment?
+
+Final response format:
+
+If perfect, say:
+“Everything is production-ready. You can safely deploy to Vercel + Neon.”
+
+If not perfect:
+- List all issues clearly
+- Fix the issues
+- Re-test
+- Then confirm final deployment readiness
+
+Do not change existing working features. Only fix bugs required for production launch.

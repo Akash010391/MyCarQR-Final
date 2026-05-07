@@ -1,0 +1,90 @@
+Do a FINAL PRODUCTION READY CHECKUP of my MyCarQR app before deployment.
+
+IMPORTANT:
+- Do NOT add new features.
+- Do NOT redesign anything.
+- Do NOT remove or change existing working features.
+- Only find and fix bugs, broken routes, missing content, console errors, deployment issues, or security problems.
+
+Check everything deeply:
+
+1. Core App
+- Landing page works
+- Signup/login/logout works
+- Dashboard works
+- Add/Edit/Delete vehicle works
+- Unique QR generation per vehicle works
+- QR scan page works
+- QR download/PDF sticker download works
+- Stylish QR designs work
+- Mobile responsive
+
+2. Safety Features
+- Accident report works
+- Accident report image upload works
+- Lost key/item return works
+- Lost key image upload works
+- SOS Emergency Profile works
+- Scan history works
+- Location capture works if permission is allowed
+
+3. Payment & Subscription
+- Free/Premium feature access works
+- Monthly ₹99 and Yearly ₹599 plans show correctly
+- UPI payment page works
+- UPI QR/payment settings load correctly
+- Payment screenshot upload works
+- Admin approve/reject works
+- Premium activation and expiry work
+
+4. Admin Panel
+- Admin access works
+- Admin can manage users, vehicles, payments, subscriptions, reports, sticker orders, contact messages, legal pages, FAQs, testimonials
+- Admin can update UPI ID, QR code, pricing, and payment instructions
+- No admin credentials are exposed publicly
+
+5. Legal & Footer Pages
+- About Us opens with content
+- Contact Us opens with working form
+- Privacy Policy opens with content
+- Terms & Conditions opens with content
+- Refund Policy opens with content
+- Shipping Policy opens with content
+- Disclaimer opens with content
+- No “couldn’t load page” error appears
+
+6. GitHub / Deployment Readiness
+- Current branch is clean-main
+- No real secrets in code
+- .env is ignored
+- .env.example has only placeholder values
+- App can deploy outside Replit
+- Confirm exact build command
+- Confirm exact start command
+- Confirm output directory
+- Confirm required environment variables
+- Confirm Neon database migration command
+- Confirm whether frontend goes to Vercel and backend goes to Render/Railway
+
+7. Final Technical Check
+- No console errors
+- No API errors
+- No database save errors
+- No upload errors
+- No broken buttons
+- No broken links
+- No blank pages
+- No Replit-only dependency blocking deployment
+- No hardcoded secret keys
+- CORS ready for production
+- Clerk/auth ready for production domain
+
+If everything is perfect, reply exactly:
+
+“Everything is production-ready. You can deploy MyCarQR now.”
+
+If any issue exists:
+- List the issue
+- Fix it
+- Retest
+- Then give final production-ready confirmation.

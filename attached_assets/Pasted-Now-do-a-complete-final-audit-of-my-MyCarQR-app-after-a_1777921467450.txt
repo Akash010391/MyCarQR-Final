@@ -1,0 +1,89 @@
+Now do a complete final audit of my MyCarQR app after all Android/Capacitor, FCM, UPI, Google Play Billing, onboarding, dashboard UI, bottom navigation, and AAB setup changes.
+
+Please check everything carefully without removing or breaking any existing feature.
+
+Check these areas:
+
+1. React + Vite build
+- npm install works
+- npm run build works with no errors
+- no blank dashboard/page issue
+- all routes work properly
+
+2. Capacitor Android setup
+- capacitor.config.ts has correct appId: com.mycarqr.app
+- appName is MyCarQR
+- webDir is correct for Vite build output
+- npx cap sync android works
+- Android app opens correctly
+
+3. Android navigation
+- Android back button works properly
+- Bottom navigation works
+- Hamburger menu still works for secondary pages
+- Deep links like /scan/:id work correctly
+- No route opens blank page
+
+4. Firebase Push Notifications
+- permission request works
+- FCM token is generated
+- token is saved to database
+- foreground notifications work
+- background notifications work
+- notification tap opens correct screen
+- google-services.json location is clearly mentioned
+
+5. UPI Sticker Orders
+- order ID generates correctly
+- UPI apps open correctly
+- order saved as pending_verification
+- My Orders page shows order status
+- admin can mark paid/shipped and add tracking number
+
+6. Google Play Billing
+- premium_monthly product ID is used
+- purchase flow works
+- cancel flow handled
+- restore purchase works
+- backend purchase verification is implemented or clearly marked pending
+- premium features unlock only after valid purchase
+
+7. Dashboard UI fixes
+- Welcome heading not overlapping
+- first name shown correctly
+- safety score empty state works
+- stat card empty states work
+- complete profile banner works
+
+8. Play Store readiness
+- target SDK 34
+- min SDK 24
+- Internet permission added
+- Camera permission added only if needed
+- unnecessary permissions removed
+- privacy-sensitive permissions justified
+- signed release AAB can be generated
+- exact AAB upload file path is shown
+
+9. Security check
+- no API keys exposed in frontend
+- no Firebase/Supabase secrets exposed
+- database rules/RLS checked
+- admin pages protected
+- users cannot access other users’ vehicles/orders
+
+10. Final output
+Give me:
+- list of completed items
+- list of remaining issues
+- exact files changed
+- exact commands I need to run
+- exact file path of final .aab
+- whether this app is ready for Google Play upload: YES / NO
+- if NO, tell me exactly what to fix next
+
+Important:
+Do not redesign the app.
+Do not delete existing features.
+Do not add demo/fake data.
+Only fix real issues and make the app production-ready.
