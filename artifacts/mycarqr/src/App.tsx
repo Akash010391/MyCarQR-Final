@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { initTheme } from "@/lib/theme";
 import { initCapacitor, isNativePlatform } from "@/lib/capacitor";
 import { getPendingPushToken, clearPendingPushToken } from "@/lib/pushNotifications";
-import { registerPushToken, deletePushToken, setBaseUrl } from "@workspace/api-client-react";
+import { registerPushToken, deletePushToken, setBaseUrl, setAuthTokenGetter } from "@workspace/api-client-react";
 setBaseUrl(import.meta.env.VITE_API_URL ?? "https://mycarqr-final-backend.onrender.com");
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
@@ -157,6 +157,12 @@ function ClerkQueryClientCacheInvalidator() {
 function PushTokenSync() {
   const { isSignedIn } = useUser();
   const registeredTokenRef = useRef<string | null>(null);
+  useEffect(() => {
+    setAuthTokenGetter(async () => {
+      const token = await window.Clerk?.session?.getToken();
+      return token ?? null;
+    });
+  }, []);
 
   useEffect(() => {
     if (!isNativePlatform()) return undefined;
