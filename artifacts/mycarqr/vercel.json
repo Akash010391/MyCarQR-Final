@@ -1,14 +1,12 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://mycarqr-final-backend.onrender.com/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "headers": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://mycarqr-final-backend.onrender.com/api/$1"
+    },
     {
       "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
-      ]
+      "destination": "/index.html"
     }
   ]
 }

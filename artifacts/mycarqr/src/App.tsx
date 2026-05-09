@@ -159,7 +159,7 @@ function PushTokenSync() {
   const registeredTokenRef = useRef<string | null>(null);
   useEffect(() => {
     setAuthTokenGetter(async () => {
-      const token = await window.Clerk?.session?.getToken();
+      const token = await (window as any).Clerk?.session?.getToken();
       return token ?? null;
     });
   }, []);
