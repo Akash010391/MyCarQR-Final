@@ -29,11 +29,6 @@ jobs:
           cd artifacts/mycarqr
           pnpm run build
 
-      - name: Sync Capacitor
-        run: |
-          cd artifacts/mycarqr
-          npx cap sync android
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -42,6 +37,11 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
+      - name: Sync Capacitor
+        run: |
+          cd artifacts/mycarqr
+          npx cap sync android
 
       - name: Build APK
         run: |
