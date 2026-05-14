@@ -31,7 +31,7 @@ export async function initCapacitor(
     try {
       const parsed = new URL(url);
 
-      if (parsed.hostname === "mycarqr.replit.app") {
+      if (parsed.hostname === "mycarqr.online") {
         const path = parsed.pathname;
         if (path.startsWith("/scan/")) {
           navigate(path);

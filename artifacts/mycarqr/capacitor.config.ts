@@ -6,6 +6,8 @@ const config: CapacitorConfig = {
   webDir: "dist/public",
   server: {
     androidScheme: "https",
+    url: "https://mycarqr.online",
+    cleartext: true,
   },
   plugins: {
     SplashScreen: {
@@ -17,9 +19,7 @@ const config: CapacitorConfig = {
       splashFullScreen: true,
       splashImmersive: true,
     },
-    PushNotifications: {
-      presentationOptions: ["badge", "sound", "alert"],
-    },
+    
   },
   android: {
     allowMixedContent: false,
