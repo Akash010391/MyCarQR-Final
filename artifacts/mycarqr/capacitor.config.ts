@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: 'MyCarQR',
   webDir: 'dist/public',
   server: {
-    androidScheme: 'https'
+    url: 'https://mycarqr.online',
+    cleartext: false
   }
 };
 
