@@ -28,7 +28,15 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="mycarqr.online" android:pathPrefix="/scan/" />
             </intent-filter>
-            
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="https"
+                    android:host="clerk.mycarqr.online"
+                    android:pathPrefix="/v1/oauth_callback"/>
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
