@@ -7,7 +7,6 @@ const config: CapacitorConfig = {
   server: {
     url: 'https://mycarqr.online',
     cleartext: false,
-    androidScheme: 'https',
   },
 };
 
