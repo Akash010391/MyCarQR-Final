@@ -6,8 +6,9 @@ const config: CapacitorConfig = {
   webDir: 'dist/public',
   server: {
     url: 'https://mycarqr.online',
-    cleartext: false
-  }
+    cleartext: false,
+    androidScheme: 'https',
+  },
 };
 
 export default config;
